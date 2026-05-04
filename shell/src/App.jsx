@@ -1,13 +1,9 @@
-import React, { Suspense, useState, useEffect } from 'react';
-import './App.css';
+import React, { Suspense, useState, useEffect } from "react";
+import "./App.css";
 
 // Composant de fallback quand un MFE est indisponible
 function OfflineFallback({ name }) {
-  return (
-    <div className="error-fallback">
-      {name} indisponible
-    </div>
-  );
+  return <div className="error-fallback">{name} indisponible</div>;
 }
 
 function LoadingFallback({ name }) {
@@ -36,7 +32,9 @@ function RemoteMFE({ name, importFn }) {
           setLoading(false);
         }
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   if (loading) return <LoadingFallback name={name} />;
@@ -47,26 +45,27 @@ function RemoteMFE({ name, importFn }) {
 function App() {
   return (
     <div className="shell">
-      <RemoteMFE name="Header" importFn={() => import('mfeHeader/Navbar')} />
-
       <main className="shell-content">
         <div className="content-grid-3">
           <section className="section">
-            <RemoteMFE name="Lobby" importFn={() => import('mfeLobby/Lobby')} />
+            <RemoteMFE name="Cart" importFn={() => import("mfeCart/Cart")} />
           </section>
 
           <section className="section">
-            <RemoteMFE name="Catalog" importFn={() => import('mfeCatalog/Catalog')} />
+            <RemoteMFE
+              name="Product"
+              importFn={() => import("mfeProduct/Product")}
+            />
           </section>
 
           <section className="section">
-            <RemoteMFE name="Cart" importFn={() => import('mfeCart/Cart')} />
+            <RemoteMFE name="Reco" importFn={() => import("mfeReco/Reco")} />
           </section>
         </div>
       </main>
 
       <footer className="shell-footer">
-        <p>Shell (3000) | Header (3001) | Lobby (3002) | Catalog (3003) | Cart (3004)</p>
+        <p>Shell (3000) | Product (3001) | Cart (3002) | Reco (3003)</p>
       </footer>
     </div>
   );
