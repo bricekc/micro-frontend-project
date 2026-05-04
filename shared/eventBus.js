@@ -84,6 +84,78 @@ class EventBus {
 // Singleton global - partage entre tous les MFEs
 if (!window.__EVENT_BUS__) {
   window.__EVENT_BUS__ = new EventBus();
+
+  const originalEmit = window.__EVENT_BUS__.emit.bind(window.__EVENT_BUS__);
+  const CONTRACTS = {
+    'cart:add': {
+      id: 'string',
+      name: 'string',
+      price: 'number',
+    },
+    'cart:updated': {
+      items: 'object',
+      count: 'number',
+      total: 'number',
+    },
+  };
+
+  function validatePayload(eventName, payload) {
+    const errors = [];
+    const contract = CONTRACTS[eventName];
+
+    if (!contract) return { valid: true, errors: [] };
+
+    if (!payload || typeof payload !== 'object') {
+      errors.push(`payload must be an object, got ${typeof payload}`);
+      return { valid: false, errors };
+    }
+
+    Object.entries(contract).forEach(([field, expectedType]) => {
+      if (!(field in payload)) {
+        errors.push(`missing required field: "${field}"`);
+        return;
+      }
+
+      const actualValue = payload[field];
+      const actualType = Array.isArray(actualValue) ? 'array' : typeof actualValue;
+
+      if (expectedType === 'object') {
+        if (actualType !== 'object' && actualValue !== null) {
+          errors.push(
+            `field "${field}" must be object or array, got ${actualType}`
+          );
+        }
+      } else if (actualType !== expectedType) {
+        errors.push(
+          `field "${field}" must be ${expectedType}, got ${actualType}`
+        );
+      }
+    });
+
+    return { valid: errors.length === 0, errors };
+  }
+
+  window.__EVENT_BUS__.emit = function (event, payload) {
+    const validation = validatePayload(event, payload);
+
+    if (!validation.valid) {
+      const errorMsg = validation.errors.join(', ');
+      console.error(`[CONTRACT VIOLATION] ${event} — ${errorMsg}`);
+      return false;
+    }
+
+    console.log(`[EventBus] ${event}`, payload);
+
+    if (!this.listeners[event]) return;
+
+    this.listeners[event].forEach(callback => {
+      try {
+        callback(payload);
+      } catch (error) {
+        console.error(`[EventBus] Error in listener for ${event}:`, error);
+      }
+    });
+  };
 }
 
 export default window.__EVENT_BUS__;
