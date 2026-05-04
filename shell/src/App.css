@@ -45,10 +45,27 @@ body {
 
 .content-grid-3 {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas:
+    "product cart"
+    "product reco";
   gap: 24px;
   max-width: 1600px;
   margin: 0 auto;
+  min-height: calc(100vh - 120px);
+}
+
+.content-grid-3 > .section:nth-child(1) {
+  grid-area: product;
+}
+
+.content-grid-3 > .section:nth-child(2) {
+  grid-area: cart;
+}
+
+.content-grid-3 > .section:nth-child(3) {
+  grid-area: reco;
 }
 
 .section {

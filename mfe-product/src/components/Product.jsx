@@ -7,7 +7,7 @@ function Product() {
   const [addedIds, setAddedIds] = useState(new Set());
 
   const handleAddToCart = (product) => {
-    eventBus.emit("product:add", {
+    eventBus.emit("cart:add", {
       id: product.id,
       name: product.name,
       price: product.price,
