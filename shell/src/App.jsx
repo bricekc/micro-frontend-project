@@ -48,14 +48,14 @@ function App() {
       <main className="shell-content">
         <div className="content-grid-3">
           <section className="section">
-            <RemoteMFE name="Cart" importFn={() => import("mfeCart/Cart")} />
-          </section>
-
-          <section className="section">
             <RemoteMFE
               name="Product"
               importFn={() => import("mfeProduct/Product")}
             />
+          </section>
+
+          <section className="section">
+            <RemoteMFE name="Cart" importFn={() => import("mfeCart/Cart")} />
           </section>
 
           <section className="section">
