@@ -3,24 +3,39 @@ import eventBus from "shared/eventBus";
 import "./Reco.css";
 
 const defaultRecommendations = [
-  { id: "rec-1", name: "Chargeur rapide", category: "accessory" },
-  { id: "rec-2", name: "Coque de protection", category: "accessory" },
-  { id: "rec-3", name: "Casque sans fil", category: "audio" },
-  { id: "rec-4", name: "Carte mémoire 128GB", category: "storage" },
+  { id: "snes-mario", name: "SNES - Super Mario World", category: "console", price: 49.99 },
+  { id: "n64-mario-kart", name: "N64 - Mario Kart 64", category: "console", price: 54.99 },
+  { id: "nes-zelda", name: "NES - The Legend of Zelda", category: "console", price: 39.99 },
+  { id: "gameboy-pokemon", name: "Game Boy - Pokémon Red", category: "handheld", price: 44.99 },
 ];
 
 const complementaryRecommendations = {
-  smartphone: [
-    { id: "rec-1", name: "Chargeur rapide", category: "accessory" },
-    { id: "rec-2", name: "Coque de protection", category: "accessory" },
+  "game boy - tetris": [
+    { id: "gameboy-pokemon", name: "Game Boy - Pokémon Red", category: "handheld", price: 44.99 },
   ],
-  casque: [
-    { id: "rec-3", name: "Adaptateur Bluetooth", category: "audio" },
-    { id: "rec-4", name: "Câble de recharge USB-C", category: "accessory" },
+  "snes - super mario world": [
+    { id: "n64-mario-kart", name: "N64 - Mario Kart 64", category: "console", price: 54.99 },
+    { id: "nes-zelda", name: "NES - The Legend of Zelda", category: "console", price: 39.99 },
   ],
-  tablette: [
-    { id: "rec-2", name: "Coque de protection", category: "accessory" },
-    { id: "rec-4", name: "Stylet tactile", category: "accessory" },
+  "nes - the legend of zelda": [
+    { id: "snes-mario", name: "SNES - Super Mario World", category: "console", price: 49.99 },
+    { id: "n64-mario-kart", name: "N64 - Mario Kart 64", category: "console", price: 54.99 },
+  ],
+  "genesis - sonic the hedgehog": [
+    { id: "snes-mario", name: "SNES - Super Mario World", category: "console", price: 49.99 },
+    { id: "gameboy-tetris", name: "Game Boy - Tetris", category: "handheld", price: 29.99 },
+  ],
+  "atari 2600 - pac-man": [
+    { id: "genesis-sonic", name: "Genesis - Sonic The Hedgehog", category: "console", price: 34.99 },
+    { id: "gameboy-tetris", name: "Game Boy - Tetris", category: "handheld", price: 29.99 },
+  ],
+  "n64 - mario kart 64": [
+    { id: "snes-mario", name: "SNES - Super Mario World", category: "console", price: 49.99 },
+    { id: "nes-zelda", name: "NES - The Legend of Zelda", category: "console", price: 39.99 },
+  ],
+  "ps1 - crash bandicoot": [
+    { id: "n64-mario-kart", name: "N64 - Mario Kart 64", category: "console", price: 54.99 },
+    { id: "snes-mario", name: "SNES - Super Mario World", category: "console", price: 49.99 },
   ],
 };
 
